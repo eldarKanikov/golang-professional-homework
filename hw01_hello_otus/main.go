@@ -7,5 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Println(reverse.String("Hello, OTUS!"))
+	reversedString := reverse.String("Hello, OTUS!")
+	fmt.Println(reversedString)
 }
