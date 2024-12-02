@@ -1,4 +1,4 @@
-module eldarKanikov/golang-professional-homework/hw10_program_optimization
+module github.com/eldarKanikov/golang-professional-homework/hw10_program_optimization
 
 go 1.22
 

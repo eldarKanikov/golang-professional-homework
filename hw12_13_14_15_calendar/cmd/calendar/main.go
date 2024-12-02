@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/app"
-	"eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/logger"
-	internalhttp "eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/server/http"
-	memorystorage "eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/storage/memory"
+	"github.com/eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/app"
+	"github.com/eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/logger"
+	internalhttp "github.com/eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/server/http"
+	memorystorage "github.com/eldarKanikov/golang-professional-homework/hw12_13_14_15_calendar/internal/storage/memory"
 )
 
 var configFile string

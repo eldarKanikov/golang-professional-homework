@@ -1,4 +1,4 @@
-module eldarKanikov/golang-professional-homework/hw01_hello_otus
+module github.com/eldarKanikov/golang-professional-homework/hw01_hello_otus
 
 go 1.22
 
