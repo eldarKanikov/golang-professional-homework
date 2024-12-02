@@ -1,4 +1,4 @@
-module github.com/eldarKanikov/hw04_lru_cache
+module eldarKanikov/golang-professional-homework/hw04_lru_cache
 
 go 1.22
 

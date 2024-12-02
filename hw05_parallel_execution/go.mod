@@ -1,4 +1,4 @@
-module github.com/eldarKanikov/hw05_parallel_execution
+module eldarKanikov/golang-professional-homework/hw05_parallel_execution
 
 go 1.22
 

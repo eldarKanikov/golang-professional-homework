@@ -1,4 +1,4 @@
-module github.com/eldarKanikov/hw02_unpack_string
+module eldarKanikov/golang-professional-homework/hw02_unpack_string
 
 go 1.22
 

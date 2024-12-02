@@ -1,3 +1,3 @@
-module github.com/eldarKanikov/hw09_struct_validator
+module eldarKanikov/golang-professional-homework/hw09_struct_validator
 
 go 1.22

@@ -1,4 +1,4 @@
-module github.com/eldarKanikov/hw11_telnet_client
+module eldarKanikov/golang-professional-homework/hw11_telnet_client
 
 go 1.22
 

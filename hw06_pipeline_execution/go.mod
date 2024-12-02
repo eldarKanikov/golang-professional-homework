@@ -1,4 +1,4 @@
-module github.com/eldarKanikov/hw06_pipeline_execution
+module eldarKanikov/golang-professional-homework/hw06_pipeline_execution
 
 go 1.22
 

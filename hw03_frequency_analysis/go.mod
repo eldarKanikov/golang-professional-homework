@@ -1,4 +1,4 @@
-module github.com/eldarKanikov/hw03_frequency_analysis
+module eldarKanikov/golang-professional-homework/hw03_frequency_analysis
 
 go 1.22
 
