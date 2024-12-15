@@ -8,10 +8,10 @@ import (
 	"unicode"
 )
 
-const (
-	EMPTY_INPUT_UNPACK_ERROR                 = "input string is empty"
-	TWO_OR_MORE_DIGITS_TOGETHER_UNPACK_ERROR = "two or more digits together"
-	FIRST_ELEMET_IS_DIGIT_UNPACK_ERROR       = "first element is digit"
+var (
+	ErrEmptyInputUnpackError              = errors.New("input string is empty")
+	ErrTwoOrMoreDigitsTogetherUnpackError = errors.New("two or more digits together")
+	ErrFirstElementIsDigitUnpackError     = errors.New("first element is digit")
 )
 
 func Unpack(input string) (string, error) {
@@ -39,17 +39,17 @@ func Unpack(input string) (string, error) {
 
 func validateAndReturnRunes(input string) ([]rune, error) {
 	if input == "" {
-		return nil, errors.New(EMPTY_INPUT_UNPACK_ERROR)
+		return nil, ErrEmptyInputUnpackError
 	}
 	twoOrMoreDigitsTogetherRegexp := regexp.MustCompile(`\d{2,}`)
 
 	if twoOrMoreDigitsTogetherRegexp.MatchString(input) {
-		return nil, errors.New(TWO_OR_MORE_DIGITS_TOGETHER_UNPACK_ERROR)
+		return nil, ErrTwoOrMoreDigitsTogetherUnpackError
 	}
 
 	runes := []rune(input)
 	if unicode.IsDigit(runes[0]) {
-		return nil, errors.New(FIRST_ELEMET_IS_DIGIT_UNPACK_ERROR)
+		return nil, ErrFirstElementIsDigitUnpackError
 	}
 	return runes, nil
 }

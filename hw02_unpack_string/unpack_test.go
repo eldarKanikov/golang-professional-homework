@@ -39,12 +39,11 @@ func TestUnpack(t *testing.T) {
 
 func TestUnpackInvalidString(t *testing.T) {
 	_, err := Unpack("3abc")
-	require.Truef(t, errors.Is(err, errors.New(FIRST_ELEMET_IS_DIGIT_UNPACK_ERROR)), "actual error %q", err)
+	require.Truef(t, errors.Is(err, ErrFirstElementIsDigitUnpackError), "actual error %q", err)
 
 	_, err = Unpack("aaa10b")
-	require.Truef(t, errors.Is(err, errors.New(TWO_OR_MORE_DIGITS_TOGETHER_UNPACK_ERROR)), "actual error %q", err)
+	require.Truef(t, errors.Is(err, ErrTwoOrMoreDigitsTogetherUnpackError), "actual error %q", err)
 
 	_, err = Unpack("")
-	require.Truef(t, errors.Is(err, errors.New(TWO_OR_MORE_DIGITS_TOGETHER_UNPACK_ERROR)), "actual error %q", err)
-
+	require.Truef(t, errors.Is(err, ErrEmptyInputUnpackError), "actual error %q", err)
 }
