@@ -48,6 +48,66 @@ func TestTop10(t *testing.T) {
 		require.Len(t, Top10(""), 0)
 	})
 
+	t.Run("single word", func(t *testing.T) {
+		text := "Жили"
+		expected := []string{text}
+		require.Equal(t, expected, Top10(text))
+	})
+
+	t.Run("same word multiple times", func(t *testing.T) {
+		text := "опа опа опа"
+		expected := []string{"опа"}
+		require.Equal(t, expected, Top10(text))
+	})
+
+	t.Run("multiple spaces between words", func(t *testing.T) {
+		input := "слово1    слово2     слово3      слово1"
+		expected := []string{"слово1", "слово2", "слово3"}
+		result := Top10(input)
+		require.Equal(t, expected[:len(result)], result)
+	})
+
+	t.Run("case sensitive words", func(t *testing.T) {
+		input := "Слово слово СЛОВО СлоВо слово"
+		expected := []string{"слово", "СЛОВО", "СлоВо", "Слово"}
+		result := Top10(input)
+		require.Equal(t, expected[:len(result)], result)
+	})
+
+	t.Run("words with punctuation", func(t *testing.T) {
+		input := "слово1, слово3! слово3? слово1... слово2,"
+		expected := []string{"слово1,", "слово1...", "слово2,", "слово3!", "слово3?"}
+		result := Top10(input)
+		require.Equal(t, expected[:len(result)], result)
+	})
+
+	t.Run("more than 10 different words", func(t *testing.T) {
+		input := "а я вовсе не колдунья, я любила и люблю, это мне судьба послала..."
+		result := Top10(input)
+		require.Len(t, result, 10)
+	})
+
+	t.Run("words with special characters", func(t *testing.T) {
+		input := "слово-1 слово_2 слово#3 слово-1 слово_2 слово-1"
+		expected := []string{"слово-1", "слово_2", "слово#3"}
+		result := Top10(input)
+		require.Equal(t, expected[:len(result)], result)
+	})
+
+	t.Run("latin characters", func(t *testing.T) {
+		input := "unique New York, New York unique"
+		expected := []string{"New", "unique", "York", "York,"}
+		result := Top10(input)
+		require.Equal(t, expected[:len(result)], result)
+	})
+
+	t.Run("mixed newlines and tabs", func(t *testing.T) {
+		input := "слово1\nслово2\tслово3\nслово1\tслово2\nслово1"
+		expected := []string{"слово1", "слово2", "слово3"}
+		result := Top10(input)
+		require.Equal(t, expected[:len(result)], result)
+	})
+
 	t.Run("positive test", func(t *testing.T) {
 		if taskWithAsteriskIsCompleted {
 			expected := []string{
