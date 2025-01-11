@@ -49,15 +49,15 @@ func TestCache(t *testing.T) {
 		checkGet(t, c, "1", 1, true)
 		checkGet(t, c, "2", 2, true)
 		lru := c.(*lruCache)
-		require.Equal(t, lru.valuesQueue.Len(), 2)
-		require.Equal(t, len(lru.valuesItems), 2)
+		require.Equal(t, lru.queue.Len(), 2)
+		require.Equal(t, len(lru.items), 2)
 
 		c.Clear()
 
 		checkGet(t, c, "1", nil, false)
 		checkGet(t, c, "2", nil, false)
-		require.Equal(t, lru.valuesQueue.Len(), 0)
-		require.Equal(t, len(lru.valuesItems), 0)
+		require.Equal(t, lru.queue.Len(), 0)
+		require.Equal(t, len(lru.items), 0)
 	})
 
 	t.Run("overload test", func(t *testing.T) {
@@ -129,8 +129,6 @@ func checkGet(t *testing.T, c Cache, key Key, expectedValue interface{}, exist b
 
 func checkCapacity(t *testing.T, lru *lruCache, length int) {
 	t.Helper()
-	require.Equal(t, lru.valuesQueue.Len(), length)
-	require.Equal(t, lru.keysQueue.Len(), length)
-	require.Equal(t, len(lru.valuesItems), length)
-	require.Equal(t, len(lru.keysItems), length)
+	require.Equal(t, lru.queue.Len(), length)
+	require.Equal(t, len(lru.items), length)
 }
