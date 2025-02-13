@@ -1,8 +1,6 @@
 package hw06pipelineexecution
 
 import (
-	"fmt"
-	"slices"
 	"strconv"
 	"sync"
 	"testing"
@@ -58,13 +56,8 @@ func TestPipeline(t *testing.T) {
 			result = append(result, s.(string))
 		}
 		elapsed := time.Since(start)
-		expected := []string{"102", "104", "106", "108", "110"}
 
-		require.Len(t, result, 5)
-		for _, item := range result {
-			require.True(t, slices.Contains(expected, item))
-		}
-		fmt.Println(elapsed)
+		require.Equal(t, []string{"102", "104", "106", "108", "110"}, result)
 		require.Less(t,
 			int64(elapsed),
 			// ~0.8s for processing 5 values in 4 stages (100ms every) concurrently
@@ -91,11 +84,14 @@ func TestPipeline(t *testing.T) {
 		}()
 
 		result := make([]string, 0, 10)
+		start := time.Now()
 		for s := range ExecutePipeline(in, done, stages...) {
 			result = append(result, s.(string))
 		}
+		elapsed := time.Since(start)
 
 		require.Len(t, result, 0)
+		require.Less(t, int64(elapsed), int64(abortDur)+int64(fault))
 	})
 }
 
