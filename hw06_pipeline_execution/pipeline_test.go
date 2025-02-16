@@ -125,7 +125,6 @@ func TestPanic(t *testing.T) {
 					}()
 
 					for v := range in {
-						time.Sleep(sleepPerStage)
 						out <- f(v)
 					}
 				}()
@@ -188,14 +187,13 @@ func TestEmptyCases(t *testing.T) {
 
 	t.Run("empty in", func(t *testing.T) {
 		in := make(Bi)
-		done := make(Bi)
 
 		go func() {
 			close(in)
 		}()
 
 		result := make([]interface{}, 0, 10)
-		for s := range ExecutePipeline(in, done, stages...) {
+		for s := range ExecutePipeline(in, nil, stages...) {
 			result = append(result, s.(string))
 		}
 		require.Len(t, result, 0)

@@ -9,8 +9,6 @@ type (
 type Stage func(in In) (out Out)
 
 func ExecutePipeline(in In, done In, stages ...Stage) Out {
-	out := make(Bi)
-	defer close(out)
 
 	interOut := in
 	for _, stage := range stages {
@@ -21,23 +19,26 @@ func ExecutePipeline(in In, done In, stages ...Stage) Out {
 
 func stageProcess(stage Stage, in In, done In) Out {
 	interIn := make(Bi)
-	go func(interIn Bi, in In, done In) {
-		defer close(interIn)
-		for item := range in {
+	go func() {
+		for {
 			select {
 			case <-done:
-				go func(in In) {
-					//nolint:revive
-					for range in {
+				go func() {
+					for item := range in {
+						_ = item
 					}
-				}(in)
+				}()
+				close(interIn)
 				return
-			default:
+			case item, ok := <-in:
+				if !ok {
+					close(interIn)
+					return
+				}
 				interIn <- item
 			}
 		}
-	}(interIn, in, done)
+	}()
 
-	out := stage(interIn)
-	return out
+	return stage(interIn)
 }
