@@ -41,9 +41,7 @@ func generateStages() []Stage {
 }
 
 func TestPipeline(t *testing.T) {
-
 	stages := generateStages()
-
 	t.Run("simple case", func(t *testing.T) {
 		in := make(Bi)
 		data := []int{1, 2, 3, 4, 5}
@@ -114,7 +112,7 @@ func TestPanic(t *testing.T) {
 
 		panicChan := make(chan interface{}, 1)
 
-		safeG := func(name string, f func(v interface{}) interface{}) Stage {
+		safeG := func(_ string, f func(v interface{}) interface{}) Stage {
 			return func(in In) Out {
 				out := make(Bi)
 				go func() {
@@ -155,10 +153,8 @@ func TestPanic(t *testing.T) {
 		require.Equal(t, 2, results[0].(int))
 		require.Equal(t, 4, results[1].(int))
 
-		select {
-		case panicVal := <-panicChan:
-			require.Equal(t, panicVal.(string), "surprise!  panic: value is 3")
-		}
+		panicVal := <-panicChan
+		require.Equal(t, panicVal.(string), "surprise!  panic: value is 3")
 	})
 }
 
